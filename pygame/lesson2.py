@@ -7,7 +7,7 @@ screen = pygame.display.set_mode((1000,1000))
 clock = pygame.time.Clock()
 running = True
 dt = 0
-
+x = 500
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 rectangle1_left = 400
 rectangle2_left = 400
@@ -17,14 +17,14 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+    
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
-
+    player_pos.y -= 10
     pygame.draw.circle(screen, "red", player_pos, 40)
+    
     rectangle1 = pygame.Rect(rectangle1_left,0, 200, 50)
     rectangle2 = pygame.Rect(rectangle2_left,950, 200, 50)
-
     pygame.draw.rect(screen,'red', rectangle1)
     pygame.draw.rect(screen,'red', rectangle2)
     keys = pygame.key.get_pressed()
@@ -45,5 +45,5 @@ while running:
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
     dt = clock.tick(60) / 1000
-
+x = x-50
 pygame.quit()

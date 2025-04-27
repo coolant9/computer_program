@@ -25,14 +25,28 @@ while running:
     screen.fill("purple")
     player_pos = update_player_pos(d,player_pos)
     pygame.draw.circle(screen, "red",player_pos , 40)
+    
     if player_pos.y == 50:
         d = 1
+    
     if player_pos.y == 950:
         d = -1
     rectangle1 = pygame.Rect(rectangle1_left,0, 200, 50)
     rectangle2 = pygame.Rect(rectangle2_left,950, 200, 50)
+    if rectangle1.x <= 300 and player_pos.y<=200:
+        d = -1
+    if rectangle2.x <= 300 and player_pos.y >= 800:
+        d = 1
+    if rectangle1.x >= 600 and player_pos.y <= 200:
+        d = -1
+    if rectangle2.x >= 600 and player_pos.y >= 800:
+        d = 1
+    
+    
+
     pygame.draw.rect(screen,'green', rectangle1)
     pygame.draw.rect(screen,'cyan', rectangle2)
+    
     keys = pygame.key.get_pressed()
      
     if keys[pygame.K_a]:

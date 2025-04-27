@@ -1,6 +1,8 @@
 # Example file showing a circle moving on screen
 import pygame
-
+def update_player_pos(d,player_pos):
+    player_pos.y += d*10    
+    return player_pos
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1000,1000))
@@ -21,7 +23,7 @@ while running:
     
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
-    player_pos.y += d*10
+    player_pos = update_player_pos(d,player_pos)
     pygame.draw.circle(screen, "red",player_pos , 40)
     if player_pos.y == 50:
         d = 1
@@ -29,10 +31,10 @@ while running:
         d = -1
     rectangle1 = pygame.Rect(rectangle1_left,0, 200, 50)
     rectangle2 = pygame.Rect(rectangle2_left,950, 200, 50)
-    pygame.draw.rect(screen,'red', rectangle1)
-    pygame.draw.rect(screen,'red', rectangle2)
+    pygame.draw.rect(screen,'green', rectangle1)
+    pygame.draw.rect(screen,'cyan', rectangle2)
     keys = pygame.key.get_pressed()
-        
+     
     if keys[pygame.K_a]:
         rectangle1_left -= 300 * dt
     if keys[pygame.K_d]:

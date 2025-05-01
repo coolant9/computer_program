@@ -1,9 +1,10 @@
 # Example file showing a circle moving on screen
 import pygame
-def update_player_pos(dy,ball_pos):
+def update_player_pos(dy,ball_pos,dx):
     ball_pos.y += dy*10 
-    ball_pos.x += -1*0.1*10   
+    ball_pos.x += dx*0.1*10   
     return ball_pos
+    
     
 # pygame setup
 pygame.init()
@@ -13,7 +14,7 @@ running = True
 dt = 0
 x = 500
 dy = -1
-dx =  1
+dx =  -1
 ball_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 rectangle1_left = 400
 rectangle2_left = 400
@@ -26,7 +27,7 @@ while running:
     
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
-    ball_pos = update_player_pos(dy,ball_pos)
+    ball_pos = update_player_pos(dy,ball_pos,dx)
     pygame.draw.circle(screen, "red",ball_pos , 40)
     
     def is_hitting(rectangle,ball):
@@ -38,11 +39,19 @@ while running:
     rectangle2 = pygame.Rect(rectangle2_left,950, 200, 50)
     
     if ball_pos.y == 50 and is_hitting(rectangle1, ball_pos):
+        center = rectangle1.x + rectangle1.width/2
         dy = 1
-
+        if ball_pos.x > center:
+            dx = 1
+        else:
+            dx = -1
     if ball_pos.y == 950 and is_hitting(rectangle2, ball_pos):
         dy = -1
-  
+        center = rectangle2.x + rectangle2.width/2
+        if ball_pos.x > center:
+            dx=1
+        else:
+            dx = -1
    
     
     

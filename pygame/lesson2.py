@@ -22,8 +22,8 @@ while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+            if event.type == pygame.QUIT:
+                running = False
     
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
@@ -52,6 +52,12 @@ while running:
             dx=1
         else:
             dx = -1
+    if ball_pos.x == 40:
+        dx = 1
+    if ball_pos.x == 960:
+        dx = -1
+    
+    
    
     
     
@@ -61,14 +67,15 @@ while running:
     
     keys = pygame.key.get_pressed()
      
-    if keys[pygame.K_a]:
-        rectangle1_left -= 300 * dt
-    if keys[pygame.K_d]:
+    if keys[pygame.K_a] and rectangle1.x > 0:
+        rectangle1_left -= 300 * dt 
+    if keys[pygame.K_d] and rectangle1.x < 1000-rectangle1.width:
         rectangle1_left += 300 * dt
-    if keys[pygame.K_j]:  
+    if keys[pygame.K_j] and rectangle2.x > 0:  
         rectangle2_left -= 300 * dt 
-    if keys[pygame.K_l]:  
-        rectangle2_left += 300 * dt                        
+    if keys[pygame.K_l] and rectangle2.x < 1000-rectangle2.width:  
+        rectangle2_left += 300 * dt      
+                      
                        
 
     # flip() the display to put your work on screen

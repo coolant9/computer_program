@@ -1,5 +1,14 @@
 # Example file showing a circle moving on screen
 import pygame
+
+
+horizotal_speed = 0.2
+dt = 0
+x = 500
+dy = -1
+dx =  -1
+radius = 40
+
 def draw_text(screen, x, y, text_str):
     background = pygame.Surface((screen.get_width(), screen.get_height()))
     background.fill('purple')
@@ -11,7 +20,7 @@ def draw_text(screen, x, y, text_str):
 
 def update_player_pos(dy,ball_pos,dx):
     ball_pos.y += dy*10 
-    ball_pos.x += dx*0.1*10   
+    ball_pos.x += dx*horizotal_speed*10   
     return ball_pos
     
     
@@ -20,10 +29,7 @@ pygame.init()
 screen = pygame.display.set_mode((1000,1000))
 clock = pygame.time.Clock()
 running = True
-dt = 0
-x = 500
-dy = -1
-dx =  -1
+
 ball_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 rectangle1_left = 400
 rectangle2_left = 400
@@ -37,7 +43,7 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
     ball_pos = update_player_pos(dy,ball_pos,dx)
-    pygame.draw.circle(screen, "red",ball_pos , 40)
+    pygame.draw.circle(screen, "red",ball_pos , radius)
     
     def is_hitting(rectangle,ball):
         center = rectangle.x + rectangle.width/2

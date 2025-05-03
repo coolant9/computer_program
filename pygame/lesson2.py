@@ -1,5 +1,14 @@
 # Example file showing a circle moving on screen
 import pygame
+def draw_text(screen, x, y, text_str):
+    background = pygame.Surface((screen.get_width(), screen.get_height()))
+    background.fill('purple')
+    font = pygame.font.Font(None, 64)
+    text = font.render(text_str, True, (128, 128, 128))
+    textpos = text.get_rect(x=x, y=y)
+    background.blit(text, textpos)
+    screen.blit(background, (0, 0))
+
 def update_player_pos(dy,ball_pos,dx):
     ball_pos.y += dy*10 
     ball_pos.x += dx*0.1*10   
@@ -75,7 +84,12 @@ while running:
         rectangle2_left -= 300 * dt 
     if keys[pygame.K_l] and rectangle2.x < 1000-rectangle2.width:  
         rectangle2_left += 300 * dt      
-                      
+    
+    if ball_pos.y <= -100:
+        draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, 'cyan won')       
+    if ball_pos.y >= 1100:
+        draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, 'green won')
+               
                        
 
     # flip() the display to put your work on screen

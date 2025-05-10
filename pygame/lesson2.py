@@ -8,6 +8,13 @@ x = 500
 dy = -1
 dx =  -1
 radius = 40
+def reset(screen):
+    ball_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+    rectangle1_left = 400
+    rectangle2_left = 400
+    return ball_pos,rectangle1_left,rectangle2_left
+    
+
 
 def draw_text(screen, x, y, text_str):
     background = pygame.Surface((screen.get_width(), screen.get_height()))
@@ -29,11 +36,9 @@ pygame.init()
 screen = pygame.display.set_mode((1000,1000))
 clock = pygame.time.Clock()
 running = True
-
-ball_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-rectangle1_left = 400
-rectangle2_left = 400
+ball_pos,rectangle1_left,rectangle2_left = reset(screen)
 while running:
+    
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
@@ -89,7 +94,14 @@ while running:
     if keys[pygame.K_j] and rectangle2.x > 0:  
         rectangle2_left -= 300 * dt 
     if keys[pygame.K_l] and rectangle2.x < 1000-rectangle2.width:  
-        rectangle2_left += 300 * dt      
+        rectangle2_left += 300 * dt  
+    if keys[pygame.K_r] and ball_pos.y >= 1100 or ball_pos.y <= -100:
+        ball_pos,rectangle1_left,rectangle2_left = reset(screen)
+    if keys [pygame.K_q] and ball_pos.y >= 1200 or ball_pos.y <= -200:
+        running = False
+        
+
+            
     
     if ball_pos.y <= -100:
         draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, 'cyan won')       

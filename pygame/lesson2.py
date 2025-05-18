@@ -13,8 +13,8 @@ radius = 40
 cyan_win = -100
 green_win = 1100
 
-screen_width = 1000
-screen_height = 1000
+screen_width = 900
+screen_height = 900
 speed_multiplier = 10
 
 background_color = "purple"

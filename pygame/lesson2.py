@@ -11,6 +11,7 @@ dy = -1
 dx =  -1
 radius = 40
 cyan_win = -100
+green_win = 1100
 
 screen_width = 1000
 screen_height = 1000
@@ -22,6 +23,9 @@ ball_color = "black"
 rectangle1_width = 200
 rectangle2_width = 200
 rectangle_height = 50
+
+top_rect_color = 'red'
+bottom_rect_color = 'yellow'
 
 
 def reset(screen):
@@ -46,7 +50,7 @@ def update_player_pos(dy, ball_pos, dx):
     
 def is_hitting(rectangle, ball):
     center = rectangle.x + rectangle.width/2
-    return abs(center - ball.x) <= 100
+    return  abs(center - ball.x) <= 100+radius
     
 # pygame setup
 pygame.init()
@@ -71,41 +75,39 @@ while running:
     pygame.draw.circle(screen, ball_color, ball_pos , radius)
     
     
-    rectangle1 = pygame.Rect(rectangle1_left, 0, rectangle1_width, rectangle_height)
-    rectangle2 = pygame.Rect(rectangle2_left, screen_height - rectangle_height, rectangle2_width, rectangle_height)
+    top_rect = pygame.Rect(rectangle1_left, 0, rectangle1_width, rectangle_height)
+    bottom_rect = pygame.Rect(rectangle2_left, screen_height - rectangle_height, rectangle2_width, rectangle_height)
 
 
-    if ball_pos.y == rectangle1.bottom and is_hitting(rectangle1, ball_pos):
-        center = rectangle1.x + rectangle1.width/2
+    if ball_pos.y == top_rect.bottom and is_hitting(top_rect, ball_pos):
+        center = top_rect.x + top_rect.width/2
         dy = 1
-        if ball_pos.x > center:
+        if ball_pos.x > center: 
             dx = 1
-        else:
-            dx = -1
-    if ball_pos.y == rectangle2.top and is_hitting(rectangle2, ball_pos):
+        
+    if ball_pos.y == bottom_rect.top and is_hitting(bottom_rect, ball_pos):
         dy = -1
-        center = rectangle2.x + rectangle2.width/2
+        center = bottom_rect.x + bottom_rect.width/2
         if ball_pos.x > center:
             dx=1
-        else:
-            dx = -1
+        
     if ball_pos.x == radius:
         dx = 1
     if ball_pos.x == screen_width - radius:
         dx = -1
     
-    pygame.draw.rect(screen, 'green', rectangle1)
-    pygame.draw.rect(screen, 'cyan', rectangle2)
+    pygame.draw.rect(screen, top_rect_color, top_rect)
+    pygame.draw.rect(screen, bottom_rect_color, bottom_rect)
     
     keys = pygame.key.get_pressed()
      
-    if keys[pygame.K_a] and rectangle1.x > 0:
+    if keys[pygame.K_a] and top_rect.x > 0:
         rectangle1_left -= 300 * dt 
-    if keys[pygame.K_d] and rectangle1.x < screen_width - rectangle1.width:
+    if keys[pygame.K_d] and top_rect.x < screen_width - top_rect.width:
         rectangle1_left += 300 * dt
-    if keys[pygame.K_j] and rectangle2.x > 0:  
+    if keys[pygame.K_j] and bottom_rect.x > 0:  
         rectangle2_left -= 300 * dt 
-    if keys[pygame.K_l] and rectangle2.x < screen_width - rectangle2.width:  
+    if keys[pygame.K_l] and bottom_rect.x < screen_width - bottom_rect.width:  
         rectangle2_left += 300 * dt  
     out_of_bounds = ball_pos.y > screen_width or ball_pos.y < 0
     if keys[pygame.K_r] and out_of_bounds:
@@ -114,10 +116,10 @@ while running:
         running = False
         
 
-    if ball_pos.y <= -100:
-        draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, 'cyan won') 
-    if ball_pos.y >= 1100:
-        draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, 'green won')
+    if ball_pos.y <= -1*radius:
+        draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, f'{bottom_rect_color} won') 
+    if ball_pos.y >= screen_height+radius:
+        draw_text(screen, screen.get_width()/2-200, screen.get_height()/2-50, f'{top_rect_color} won')
                
                        
 
